@@ -34,3 +34,15 @@ export const getUsers = query({
     return users;
   },
 });
+
+// find user in the table whose clerk id match the given clerk id
+export const getUserByClerkId = query({
+  args: { clerkId: v.string() },
+  handler: async (ctx, args) => {
+    const user = await ctx.db
+      .query("users")
+      .withIndex("by_clerk_id", (q) => q.eq("clerkId", args.clerkId))
+      .first();
+    return user;
+  },
+});
