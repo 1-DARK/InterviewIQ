@@ -1,6 +1,5 @@
 import { v } from "convex/values";
 import { mutation, query } from "./_generated/server";
-import { request } from "http";
 
 export const addComment = mutation({
   // mutation for  write operation on database
@@ -10,14 +9,14 @@ export const addComment = mutation({
     rating: v.number(),
   },
   handler: async (ctx, args) => {
-    const identify = await ctx.auth.getUserIdentity();
-    if (!identify) throw new Error("User is not authenticated");
+    const identity = await ctx.auth.getUserIdentity();
+    if (!identity) throw new Error("User is not authenticated");
 
     return await ctx.db.insert("comments", {
       interviewId: args.interviewId,
       content: args.content,
       rating: args.rating,
-      interviewerId: identify.subject,
+      interviewerId: identity.subject,
     });
   },
 });
