@@ -1,4 +1,5 @@
-import { query } from "./_generated/server";
+import { v } from "convex/values";
+import { mutation, query } from "./_generated/server";
 
 export const getAllInterviews = query({
   handler: async (ctx) => {
@@ -24,5 +25,38 @@ export const getMyInterviews = query({
       .collect();
 
     return interviews;
+  },
+});
+
+// fetches a single interview that matches a given streamCallId
+export const getInterviewByStreamCallId = query({
+  args: { streamCallId: v.string() },
+  handler: async (ctx, args) => {
+    return await ctx.db
+      .query("interviews") // query for read
+      .withIndex("by_stream_call_id", (q) =>
+        q.eq("streamCallId", args.streamCallId),
+      )
+      .first();
+  },
+});
+
+export const createInterview = mutation({
+  args: {
+    title: v.string(),
+    description: v.optional(v.string()),
+    startTime: v.number(),
+    status: v.string(),
+    streamCallId: v.string(),
+    candidateId: v.string(),
+    interviewerIds: v.array(v.string()),
+  },
+  handler: async (ctx, args) => {
+    const identity = await ctx.auth.getUserIdentity();
+    if (!identity) throw new Error("Unauthorized");
+
+    return await ctx.db.insert("interviews", {
+      ...args,
+    });
   },
 });
