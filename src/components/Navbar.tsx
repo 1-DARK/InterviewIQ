@@ -1,7 +1,8 @@
 import { CodeIcon } from "lucide-react";
 import ModeToggle from "./ModeToggle";
 import Link from "next/link";
-import { SignedIn } from "@clerk/nextjs";
+import { SignedIn, UserButton } from "@clerk/nextjs";
+import DasboardBtn from "./DasboardBtn";
 
 function Navbar() {
   return (
@@ -18,7 +19,9 @@ function Navbar() {
 
         <SignedIn>
           <div className="flex items-center space-x-4 ml-auto">
+            <DasboardBtn />
             <ModeToggle />
+            <UserButton />
           </div>
         </SignedIn>
       </div>
