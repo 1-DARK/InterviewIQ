@@ -1,11 +1,28 @@
+import { CodeIcon } from "lucide-react";
 import ModeToggle from "./ModeToggle";
+import Link from "next/link";
+import { SignedIn } from "@clerk/nextjs";
 
 function Navbar() {
   return (
-    <div>
-      Nav
-      <ModeToggle />
-    </div>
+    <nav className="border-b">
+      <div className="flex h-16 items-center px-4 container mx-auto">
+        <Link
+          href="/"
+          className="flex items-center gap-2 font-semibold text-2xl mr-6 font-mono hover:opacity-80 transition-opacity"
+        >
+          <span className="text-xl font-bold text-primary font-mono tracking-wider">
+            InterviewIQ
+          </span>
+        </Link>
+
+        <SignedIn>
+          <div className="flex items-center space-x-4 ml-auto">
+            <ModeToggle />
+          </div>
+        </SignedIn>
+      </div>
+    </nav>
   );
 }
 
