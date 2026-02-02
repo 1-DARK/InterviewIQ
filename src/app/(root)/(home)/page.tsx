@@ -2,9 +2,13 @@
 import ActionCard from "@/components/ActionCard";
 import { QUICK_ACTIONS } from "@/constants";
 import { useUserRole } from "@/hooks/useUserRole";
+import { useState } from "react";
 
 export default function Home() {
   const { isInterviewer, isCandidate, isLoading } = useUserRole();
+
+  const [showModal, setShowModal] = useState(false);
+  const [modalType, setModalType] = useState<"start" | "join">();
 
   const handleQuickAction = (title: string) => {};
   return (
