@@ -1,5 +1,5 @@
 function RecordingPage() {
-  return <div></div>;
+  return <div>record</div>;
 }
 
 export default RecordingPage;
