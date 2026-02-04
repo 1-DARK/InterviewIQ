@@ -20,7 +20,16 @@ function MeetingModal({
   const [meetingUrl, setMeetingUrl] = useState("");
   const { createInstantMeeting, joinMeeting } = useMeetingActions();
 
-  const handleStart = () => {};
+  const handleStart = () => {
+    if (isJoinMeeting) {
+      const meetingId = meetingUrl.split("/").pop(); // get meeting id from url
+      if (meetingId) joinMeeting(meetingId);
+    } else {
+      createInstantMeeting();
+    }
+    setMeetingUrl("");
+    onClose();
+  };
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
       <DialogContent className="sm:max-w-106.25">
