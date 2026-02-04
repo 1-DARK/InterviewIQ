@@ -1,10 +1,13 @@
 "use client";
 
 import { useUser } from "@clerk/nextjs";
-import { StreamVideoClient } from "@stream-io/video-react-sdk";
-import { streamTokenProvider } from "@/actions/stream.actions";
+import { StreamVideo, StreamVideoClient } from "@stream-io/video-react-sdk";
+
 import { ReactNode, useEffect, useState } from "react";
 import LoaderUI from "../LoaderUI";
+import { streamTokenProvider } from "@/actions/stream.actions";
+
+// It waits for auth -> creates Stream video client -> shows loader until ready
 
 const StreamClientProvider = ({ children }: { children: ReactNode }) => {
   const [streamVideoClient, setStreamVideoClient] =
@@ -29,6 +32,8 @@ const StreamClientProvider = ({ children }: { children: ReactNode }) => {
   }, [user, isLoaded]);
 
   if (!streamVideoClient) return <LoaderUI />;
+
+  return <StreamVideo client={streamVideoClient}>{children}</StreamVideo>;
 };
 
 export default StreamClientProvider;
