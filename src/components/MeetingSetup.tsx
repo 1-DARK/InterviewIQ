@@ -1,7 +1,7 @@
 import { useCall, VideoPreview } from "@stream-io/video-react-sdk";
 import { useEffect, useState } from "react";
 import { Card } from "./ui/card";
-import { CameraIcon } from "lucide-react";
+import { CameraIcon, MicIcon } from "lucide-react";
 import { Switch } from "./ui/switch";
 
 function MeetingSetup({ onSetupComplete }: { onSetupComplete: () => void }) {
@@ -79,6 +79,25 @@ function MeetingSetup({ onSetupComplete }: { onSetupComplete: () => void }) {
                       onCheckedChange={(checked) =>
                         setIsCameraDisabled(!checked)
                       }
+                    />
+                  </div>
+
+                  {/* mic */}
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center gap-3">
+                      <div className="h-10 w-10 rounded-full bg-primary/10 flex items-center justify-center">
+                        <MicIcon className="h-5 w-5 text-primary" />
+                      </div>
+                      <div>
+                        <p className="font-medium">Microphone</p>
+                        <p className="text-sm text-muted-foreground">
+                          {isMicDisabled ? "Off" : "On"}
+                        </p>
+                      </div>
+                    </div>
+                    <Switch
+                      checked={!isMicDisabled}
+                      onCheckedChange={(checked) => setIsMicDisabled(!checked)}
                     />
                   </div>
                 </div>
