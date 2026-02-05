@@ -1,8 +1,13 @@
-import { useCall, VideoPreview } from "@stream-io/video-react-sdk";
+import {
+  DeviceSettings,
+  useCall,
+  VideoPreview,
+} from "@stream-io/video-react-sdk";
 import { useEffect, useState } from "react";
 import { Card } from "./ui/card";
-import { CameraIcon, MicIcon } from "lucide-react";
+import { CameraIcon, MicIcon, SettingsIcon } from "lucide-react";
 import { Switch } from "./ui/switch";
+import { Button } from "./ui/button";
 
 function MeetingSetup({ onSetupComplete }: { onSetupComplete: () => void }) {
   const [isCameraDisabled, setIsCameraDisabled] = useState(true);
@@ -40,9 +45,9 @@ function MeetingSetup({ onSetupComplete }: { onSetupComplete: () => void }) {
             </div>
 
             {/* video preview */}
-            <div className="mt-4 flex-1 min-h-100 rounded-xl overflow-hidden bg-muted/50 border relative">
+            <div className="mt-4 w-full flex-1 aspect-video rounded-xl overflow-hidden bg-muted/50 border relative">
               <div className="absolute inset-0">
-                <VideoPreview className="h-full w-full" />
+                <VideoPreview className="h-full w-full object-cover" />
               </div>
             </div>
           </Card>
@@ -100,6 +105,32 @@ function MeetingSetup({ onSetupComplete }: { onSetupComplete: () => void }) {
                       onCheckedChange={(checked) => setIsMicDisabled(!checked)}
                     />
                   </div>
+
+                  {/* device settings */}
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center gap-3">
+                      <div className="h-10 w-10 rounded-full bg-primary/10 flex items-center justify-center">
+                        <SettingsIcon className="h-5 w-5 text-primary" />
+                      </div>
+                      <div>
+                        <p className="font-medium">Settings</p>
+                        <p className="text-sm text-muted-foreground">
+                          Configure devices
+                        </p>
+                      </div>
+                    </div>
+                    <DeviceSettings />
+                  </div>
+                </div>
+
+                <div className="space-y-3 mt-8">
+                  <Button className="w-full" size="lg" onClick={handleJoin}>
+                    Join Meeting
+                  </Button>
+                  <p className="text-xs text-center text-muted-foreground">
+                    Do not worry, our team is super friendly! We want you to
+                    succeed.
+                  </p>
                 </div>
               </div>
             </div>
