@@ -6,7 +6,7 @@ import {
   SpeakerLayout,
   useCallStateHooks,
 } from "@stream-io/video-react-sdk";
-import { LayoutListIcon, LoaderIcon } from "lucide-react";
+import { LayoutListIcon, LoaderIcon, UsersIcon } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import {
@@ -40,7 +40,7 @@ function MeetingRoom() {
   return (
     <div className="h-[calc(100vh-4rem-1px)]">
       <ResizablePanelGroup orientation="horizontal">
-        <ResizablePanel defaultSize={300} className="relative">
+        <ResizablePanel defaultSize={400} className="relative">
           <div className="absolute inset-0">
             {/* video layout */}
             {layout === "grid" ? <PaginatedGridLayout /> : <SpeakerLayout />}
@@ -74,6 +74,17 @@ function MeetingRoom() {
                       </DropdownMenuItem>
                     </DropdownMenuContent>
                   </DropdownMenu>
+
+                  <Button
+                    variant="outline"
+                    size="icon"
+                    className="size-10"
+                    onClick={() => setShowParticipants(!showParticipants)}
+                  >
+                    <UsersIcon className="size-4" />
+                  </Button>
+
+                  <button>end call</button>
                 </div>
               </div>
             </div>
