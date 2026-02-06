@@ -45,9 +45,9 @@ function MeetingSetup({ onSetupComplete }: { onSetupComplete: () => void }) {
             </div>
 
             {/* video preview */}
-            <div className="mt-4 w-full flex-1 aspect-video rounded-xl overflow-hidden bg-muted/50 border relative">
+            <div className="mt-4 ml-5 flex-1  min-h-100 rounded-xl overflow-scroll relative">
               <div className="absolute inset-0">
-                <VideoPreview className="h-full w-full object-cover" />
+                <VideoPreview className="h-full w-full border-none" />
               </div>
             </div>
           </Card>
