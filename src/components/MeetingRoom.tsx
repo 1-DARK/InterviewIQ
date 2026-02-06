@@ -14,7 +14,12 @@ import {
   ResizablePanel,
   ResizablePanelGroup,
 } from "./ui/resizable";
-import { DropdownMenu, DropdownMenuTrigger } from "./ui/dropdown-menu";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "./ui/dropdown-menu";
 import { Button } from "./ui/button";
 
 function MeetingRoom() {
@@ -60,6 +65,14 @@ function MeetingRoom() {
                         <LayoutListIcon className="size-4" />
                       </Button>
                     </DropdownMenuTrigger>
+                    <DropdownMenuContent>
+                      <DropdownMenuItem onClick={() => setLayout("grid")}>
+                        Grid View
+                      </DropdownMenuItem>
+                      <DropdownMenuItem onClick={() => setLayout("speaker")}>
+                        Speaker View
+                      </DropdownMenuItem>
+                    </DropdownMenuContent>
                   </DropdownMenu>
                 </div>
               </div>
