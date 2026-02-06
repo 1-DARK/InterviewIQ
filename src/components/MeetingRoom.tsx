@@ -1,7 +1,18 @@
-import { CallingState, useCallStateHooks } from "@stream-io/video-react-sdk";
+import {
+  CallingState,
+  CallParticipantsList,
+  PaginatedGridLayout,
+  SpeakerLayout,
+  useCallStateHooks,
+} from "@stream-io/video-react-sdk";
 import { LoaderIcon } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
+import {
+  ResizableHandle,
+  ResizablePanel,
+  ResizablePanelGroup,
+} from "./ui/resizable";
 
 function MeetingRoom() {
   const router = useRouter();
@@ -18,7 +29,28 @@ function MeetingRoom() {
       </div>
     );
   }
-  return <div>hi</div>;
+  return (
+    <div className="h-[calc(100vh-4rem-1px)]">
+      <ResizablePanelGroup orientation="horizontal">
+        <ResizablePanel defaultSize={300} className="relative">
+          <div className="absolute inset-0">
+            {layout === "grid" ? <PaginatedGridLayout /> : <SpeakerLayout />}
+            {showParticipants && (
+              <div className="absolute right-0 top-0 h-full w-75 bg-background/95 backdrop-blur supports-backdrop-filter:bg-background/60">
+                <CallParticipantsList
+                  onClose={() => setShowParticipants(false)}
+                />
+              </div>
+            )}
+          </div>
+        </ResizablePanel>
+
+        <ResizableHandle withHandle />
+
+        <ResizablePanel>hi</ResizablePanel>
+      </ResizablePanelGroup>
+    </div>
+  );
 }
 
 export default MeetingRoom;
