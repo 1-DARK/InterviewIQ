@@ -1,6 +1,10 @@
 import { CODING_QUESTIONS, LANGUAGES } from "@/constants";
 import { useState } from "react";
-import { ResizablePanel, ResizablePanelGroup } from "./ui/resizable";
+import {
+  ResizableHandle,
+  ResizablePanel,
+  ResizablePanelGroup,
+} from "./ui/resizable";
 import { ScrollArea, ScrollBar } from "./ui/scroll-area";
 import {
   Select,
@@ -10,7 +14,7 @@ import {
   SelectValue,
 } from "./ui/select";
 import { Card, CardContent, CardHeader, CardTitle } from "./ui/card";
-import { LightbulbIcon, Notebook } from "lucide-react";
+import { AlertCircleIcon, LightbulbIcon, Notebook } from "lucide-react";
 
 function CodeEditor() {
   const [selectedQuestion, setSelectedQuestion] = useState(CODING_QUESTIONS[0]);
@@ -151,10 +155,32 @@ function CodeEditor() {
                   </ScrollArea>
                 </CardContent>
               </Card>
+
+              {/* constraints */}
+              {selectedQuestion.constraints && (
+                <Card>
+                  <CardHeader className="flex flex-row items-center gap-2">
+                    <AlertCircleIcon className="h-5 w-5 text-blue-500" />
+                    <CardTitle>Constraints</CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <ul className="list-disc list-inside space-y-1.5 text-sm marker:text-muted-foreground">
+                      {selectedQuestion.constraints.map((constraint, index) => (
+                        <li key={index} className="text-muted-foreground">
+                          {constraint}
+                        </li>
+                      ))}
+                    </ul>
+                  </CardContent>
+                </Card>
+              )}
             </div>
           </div>
+          <ScrollBar />
         </ScrollArea>
       </ResizablePanel>
+
+      <ResizableHandle withHandle />
       {/* code editor  */}
       <ResizablePanel></ResizablePanel>
     </ResizablePanelGroup>
