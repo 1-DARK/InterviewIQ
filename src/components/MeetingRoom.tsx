@@ -22,6 +22,7 @@ import {
 } from "./ui/dropdown-menu";
 import { Button } from "./ui/button";
 import EndCallButton from "./EndCallButton";
+import CodeEditor from "./CodeEditor";
 
 function MeetingRoom() {
   const router = useRouter();
@@ -94,7 +95,9 @@ function MeetingRoom() {
 
         <ResizableHandle withHandle />
 
-        <ResizablePanel>hi</ResizablePanel>
+        <ResizablePanel>
+          <CodeEditor />
+        </ResizablePanel>
       </ResizablePanelGroup>
     </div>
   );
