@@ -1,7 +1,7 @@
 import { CODING_QUESTIONS, LANGUAGES } from "@/constants";
 import { useState } from "react";
 import { ResizablePanel, ResizablePanelGroup } from "./ui/resizable";
-import { ScrollArea } from "./ui/scroll-area";
+import { ScrollArea, ScrollBar } from "./ui/scroll-area";
 import {
   Select,
   SelectContent,
@@ -10,7 +10,7 @@ import {
   SelectValue,
 } from "./ui/select";
 import { Card, CardContent, CardHeader, CardTitle } from "./ui/card";
-import { BookIcon } from "lucide-react";
+import { LightbulbIcon, Notebook } from "lucide-react";
 
 function CodeEditor() {
   const [selectedQuestion, setSelectedQuestion] = useState(CODING_QUESTIONS[0]);
@@ -106,7 +106,7 @@ function CodeEditor() {
               {/* problem desc  */}
               <Card>
                 <CardHeader className="flex flex-row items-center gap-2">
-                  <BookIcon className="h-5 w-5 text-primary/80" />
+                  <Notebook className="h-5 w-5 text-blue-600" />
                   <CardTitle>Problem Description</CardTitle>
                 </CardHeader>
                 <CardContent className="text-sm leading-relaxed">
@@ -115,6 +115,40 @@ function CodeEditor() {
                       {selectedQuestion.description}
                     </p>
                   </div>
+                </CardContent>
+              </Card>
+
+              {/* problem eg */}
+              <Card>
+                <CardHeader className="flex flex-row items-center gap-2">
+                  <LightbulbIcon className="h-5 w-5 text-yellow-500" />
+                  <CardTitle>Examples</CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <ScrollArea className="h-full w-full rounded-md border">
+                    <div className="p-4 space-y-4">
+                      {selectedQuestion.examples.map((example, index) => (
+                        <div key={index} className="space-y-2">
+                          <p className="font-medium text-sm">
+                            Example {index + 1}:
+                          </p>
+                          <ScrollArea className="h-full w-full rounded-md">
+                            <pre className="bg-muted/50 p-3 rounded-lg text-sm font-mono">
+                              <div>Input: {example.input}</div>
+                              <div>Output: {example.output}</div>
+                              {example.explanation && (
+                                <div className="pt-2 text-muted-foreground">
+                                  Explanation: {example.explanation}
+                                </div>
+                              )}
+                            </pre>
+                            <ScrollBar orientation="horizontal" />
+                          </ScrollArea>
+                        </div>
+                      ))}
+                    </div>
+                    <ScrollBar />
+                  </ScrollArea>
                 </CardContent>
               </Card>
             </div>
