@@ -15,6 +15,7 @@ import {
 } from "./ui/select";
 import { Card, CardContent, CardHeader, CardTitle } from "./ui/card";
 import { AlertCircleIcon, LightbulbIcon, Notebook } from "lucide-react";
+import { Editor } from "@monaco-editor/react";
 
 function CodeEditor() {
   const [selectedQuestion, setSelectedQuestion] = useState(CODING_QUESTIONS[0]);
@@ -182,7 +183,28 @@ function CodeEditor() {
 
       <ResizableHandle withHandle />
       {/* code editor  */}
-      <ResizablePanel></ResizablePanel>
+      <ResizablePanel>
+        <div className="h-full relative">
+          <Editor
+            height={"100%"}
+            defaultLanguage={language}
+            language={language}
+            theme="vs-dark"
+            value={code}
+            onChange={(value) => setCode(value || "")}
+            options={{
+              minimap: { enabled: false },
+              fontSize: 18,
+              lineNumbers: "on",
+              scrollBeyondLastLine: false,
+              automaticLayout: true,
+              padding: { top: 16, bottom: 16 },
+              wordWrap: "on",
+              wrappingIndent: "indent",
+            }}
+          />
+        </div>
+      </ResizablePanel>
     </ResizablePanelGroup>
   );
 }
