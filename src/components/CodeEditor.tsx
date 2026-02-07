@@ -9,6 +9,8 @@ import {
   SelectTrigger,
   SelectValue,
 } from "./ui/select";
+import { Card, CardContent, CardHeader, CardTitle } from "./ui/card";
+import { BookIcon } from "lucide-react";
 
 function CodeEditor() {
   const [selectedQuestion, setSelectedQuestion] = useState(CODING_QUESTIONS[0]);
@@ -101,6 +103,20 @@ function CodeEditor() {
                   </Select>
                 </div>
               </div>
+              {/* problem desc  */}
+              <Card>
+                <CardHeader className="flex flex-row items-center gap-2">
+                  <BookIcon className="h-5 w-5 text-primary/80" />
+                  <CardTitle>Problem Description</CardTitle>
+                </CardHeader>
+                <CardContent className="text-sm leading-relaxed">
+                  <div className="prose prose-sm dark:prose-invert max-w-none">
+                    <p className="whitespace-pre-line">
+                      {selectedQuestion.description}
+                    </p>
+                  </div>
+                </CardContent>
+              </Card>
             </div>
           </div>
         </ScrollArea>
