@@ -184,7 +184,26 @@ function CodeEditor() {
       <ResizableHandle withHandle />
       {/* code editor  */}
       <ResizablePanel>
-        <div className="h-full relative"></div>
+        <div className="h-full relative">
+          <Editor
+            height={"100%"}
+            defaultLanguage={language}
+            language={language}
+            theme="vs-dark"
+            value={code}
+            onChange={(value) => setCode(value || "")}
+            options={{
+              minimap: { enabled: false },
+              fontSize: 18,
+              lineNumbers: "on",
+              scrollBeyondLastLine: false,
+              automaticLayout: true,
+              padding: { top: 16, bottom: 16 },
+              wordWrap: "on",
+              wrappingIndent: "indent",
+            }}
+          />
+        </div>
       </ResizablePanel>
     </ResizablePanelGroup>
   );
