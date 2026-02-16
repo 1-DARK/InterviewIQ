@@ -33,6 +33,22 @@ const useGetCalls = () => {
     };
     loadCalls();
   }, [client, user?.id]);
+
+  const now = new Date();
+
+  const endedCalls = calls?.filter(({ state: { startsAt, endedAt } }: Call) => {
+    return (startsAt && new Date(startsAt) < now) || !!endedAt; // decide call ended or not
+  });
+
+  const upcomingCalls = calls?.filter(({ state: { startsAt } }: Call) => {
+    return startsAt && new Date(startsAt) > now;
+  });
+
+  const liveCalls = calls?.filter(({ state: { startsAt, endedAt } }: Call) => {
+    return startsAt && new Date(startsAt) < now && !endedAt;
+  });
+
+  return { calls, endedCalls, upcomingCalls, liveCalls, isLoading };
 };
 
 export default useGetCalls;
