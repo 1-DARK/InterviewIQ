@@ -107,7 +107,18 @@ function InterviewScheduleUI() {
     (i) => !formData.interviewerIds.includes(i.clerkId),
   );
 
-  return <div>hi schedule</div>;
+  return (
+    <div className="container max-w-7xl mx-auto p-6 space-y-6">
+      <div className="flex items-center justify-between">
+        <div>
+          <h1 className="text-3xl font-bold">Interviews</h1>
+          <p className="text-muted-foreground mt-1">
+            Schedule and manage interviews
+          </p>
+        </div>
+      </div>
+    </div>
+  );
 }
 
 export default InterviewScheduleUI;
