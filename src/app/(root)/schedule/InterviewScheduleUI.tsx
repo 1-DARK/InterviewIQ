@@ -32,6 +32,22 @@ function InterviewScheduleUI() {
       toast.error("Please select both candidate and at least one interviewer");
       return;
     }
+
+    setIsCreating(true);
+    try {
+      const { title, description, date, time, candidateId, interviewerIds } =
+        formData;
+      const [hours, minutes] = time.split(":");
+      const meetingDate = new Date(date);
+      meetingDate.setHours(parseInt(hours), parseInt(minutes), 0);
+      const id = crypto.randomUUID();
+      const call = client.call("default", id);
+    } catch (error) {
+      console.error(error);
+      toast.error("Failed to schedule meeting. Please try again.");
+    } finally {
+      setIsCreating(false);
+    }
   };
 
   return <div>hi schedule</div>;
