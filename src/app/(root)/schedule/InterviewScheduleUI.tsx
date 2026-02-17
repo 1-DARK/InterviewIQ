@@ -4,12 +4,21 @@ import { useMutation, useQuery } from "convex/react";
 import { useState } from "react";
 import { api } from "../../../../convex/_generated/api";
 import toast from "react-hot-toast";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
+import { Button } from "@/components/ui/button";
 
 function InterviewScheduleUI() {
   const client = useStreamVideoClient();
   const { user } = useUser();
   const [open, setOpen] = useState(false);
   const [isCreating, setIsCreating] = useState(false);
+
   const interviews = useQuery(api.interview.getAllInterviews) ?? [];
   const users = useQuery(api.users.getUsers) ?? [];
   const createInterview = useMutation(api.interview.createInterview);
@@ -34,12 +43,14 @@ function InterviewScheduleUI() {
     }
 
     setIsCreating(true);
+
     try {
       const { title, description, date, time, candidateId, interviewerIds } =
         formData;
       const [hours, minutes] = time.split(":");
       const meetingDate = new Date(date);
       meetingDate.setHours(parseInt(hours), parseInt(minutes), 0);
+
       const id = crypto.randomUUID();
       const call = client.call("default", id);
 
@@ -116,6 +127,18 @@ function InterviewScheduleUI() {
             Schedule and manage interviews
           </p>
         </div>
+
+        <Dialog open={open} onOpenChange={setOpen}>
+          <DialogTrigger asChild>
+            <Button size="lg">Schedule Interview</Button>
+          </DialogTrigger>
+
+          <DialogContent className="sm:max-w-125 h-[calc(100vh-200px)] overflow-auto">
+            <DialogHeader>
+              <DialogTitle>Schedule Interview</DialogTitle>
+            </DialogHeader>
+          </DialogContent>
+        </Dialog>
       </div>
     </div>
   );
