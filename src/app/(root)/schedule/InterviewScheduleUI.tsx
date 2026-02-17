@@ -12,6 +12,8 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
 
 function InterviewScheduleUI() {
   const client = useStreamVideoClient();
@@ -137,6 +139,33 @@ function InterviewScheduleUI() {
             <DialogHeader>
               <DialogTitle>Schedule Interview</DialogTitle>
             </DialogHeader>
+
+            <div className="space-y-4 py-4">
+              {/* interview title */}
+              <div className="space-y-2">
+                <label className="text-sm font-medium">Title</label>
+                <Input
+                  placeholder="Interview title"
+                  value={formData.title}
+                  onChange={(e) =>
+                    setFormData({ ...formData, title: e.target.value })
+                  }
+                />
+              </div>
+
+              {/* description */}
+              <div className="space-y-2">
+                <label className="text-sm font-medium">Description</label>
+                <Textarea
+                  placeholder="Interview description"
+                  value={formData.description}
+                  onChange={(e) =>
+                    setFormData({ ...formData, description: e.target.value })
+                  }
+                  rows={3}
+                />
+              </div>
+            </div>
           </DialogContent>
         </Dialog>
       </div>
