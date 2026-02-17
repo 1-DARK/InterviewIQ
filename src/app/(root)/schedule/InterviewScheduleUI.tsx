@@ -10,8 +10,8 @@ function InterviewScheduleUI() {
   const { user } = useUser();
   const [open, setOpen] = useState(false);
   const [isCreating, setIsCreating] = useState(false);
-  const interviews = useQuery(api.interview.getAllInterviews);
-  const users = useQuery(api.users.getUsers);
+  const interviews = useQuery(api.interview.getAllInterviews) ?? [];
+  const users = useQuery(api.users.getUsers) ?? [];
   const createInterview = useMutation(api.interview.createInterview);
 
   const candidates = users?.filter((u) => u.role === "candidate");
@@ -81,6 +81,31 @@ function InterviewScheduleUI() {
       setIsCreating(false);
     }
   };
+
+  const addInterviewer = (interviewerId: string) => {
+    if (!formData.interviewerIds.includes(interviewerId)) {
+      setFormData((prev) => ({
+        ...prev,
+        interviewerIds: [...prev.interviewerIds, interviewerId],
+      }));
+    }
+  };
+
+  const removeInterviewer = (interviewerId: string) => {
+    if (interviewerId === user?.id) return;
+    setFormData((prev) => ({
+      ...prev,
+      interviewerIds: prev.interviewerIds.filter((id) => id !== interviewerId),
+    }));
+  };
+
+  const selectedInterviewers = interviewers.filter((i) =>
+    formData.interviewerIds.includes(i.clerkId),
+  );
+
+  const availableInterviewers = interviewers.filter(
+    (i) => !formData.interviewerIds.includes(i.clerkId),
+  );
 
   return <div>hi schedule</div>;
 }
