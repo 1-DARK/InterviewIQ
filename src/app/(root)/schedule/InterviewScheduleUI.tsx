@@ -42,6 +42,38 @@ function InterviewScheduleUI() {
       meetingDate.setHours(parseInt(hours), parseInt(minutes), 0);
       const id = crypto.randomUUID();
       const call = client.call("default", id);
+
+      await call.getOrCreate({
+        data: {
+          starts_at: meetingDate.toISOString(),
+          custom: {
+            description: title,
+            additionalDetails: description,
+          },
+        },
+      });
+
+      await createInterview({
+        title,
+        description,
+        startTime: meetingDate.getTime(),
+        status: "upcoming",
+        streamCallId: id,
+        candidateId,
+        interviewerIds,
+      });
+
+      setOpen(false);
+      toast.success("Meeting scheduled successfully!");
+
+      setFormData({
+        title: "",
+        description: "",
+        date: new Date(),
+        time: "09:00",
+        candidateId: "",
+        interviewerIds: user?.id ? [user.id] : [],
+      });
     } catch (error) {
       console.error(error);
       toast.error("Failed to schedule meeting. Please try again.");
