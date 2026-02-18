@@ -14,6 +14,14 @@ import {
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import UserInfo from "@/components/UserInfo";
 
 function InterviewScheduleUI() {
   const client = useStreamVideoClient();
@@ -189,6 +197,46 @@ function InterviewScheduleUI() {
                     ))}
                   </SelectContent>
                 </Select>
+              </div>
+
+              {/* interviewers */}
+              <div className="space-y-2">
+                <label className="text-sm font-medium">Interviewers</label>
+                <div className="flex flex-wrap gap-2 mb-2">
+                  {selectedInterviewers.map((interviewer) => (
+                    <div
+                      key={interviewer.clerkId}
+                      className="inline-flex items-center gap-2 bg-secondary px-2 py-1 rounded-md text-sm"
+                    >
+                      <UserInfo user={interviewer} />
+                      {interviewer.clerkId !== user?.id && (
+                        <button
+                          onClick={() => removeInterviewer(interviewer.clerkId)}
+                          className="hover:text-destructive transition-colors"
+                        >
+                          <XIcon className="h-4 w-4" />
+                        </button>
+                      )}
+                    </div>
+                  ))}
+                </div>
+                {availableInterviewers.length > 0 && (
+                  <Select onValueChange={addInterviewer}>
+                    <SelectTrigger>
+                      <SelectValue placeholder="Add interviewer" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      {availableInterviewers.map((interviewer) => (
+                        <SelectItem
+                          key={interviewer.clerkId}
+                          value={interviewer.clerkId}
+                        >
+                          <UserInfo user={interviewer} />
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                )}
               </div>
             </div>
           </DialogContent>
