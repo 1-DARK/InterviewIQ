@@ -22,6 +22,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import UserInfo from "@/components/UserInfo";
+import { XIcon } from "lucide-react";
 
 function InterviewScheduleUI() {
   const client = useStreamVideoClient();

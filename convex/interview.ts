@@ -1,5 +1,5 @@
-import { v } from "convex/values";
 import { mutation, query } from "./_generated/server";
+import { v } from "convex/values";
 
 export const getAllInterviews = query({
   handler: async (ctx) => {
@@ -24,16 +24,15 @@ export const getMyInterviews = query({
       )
       .collect();
 
-    return interviews;
+    return interviews!;
   },
 });
 
-// fetches a single interview that matches a given streamCallId
 export const getInterviewByStreamCallId = query({
   args: { streamCallId: v.string() },
   handler: async (ctx, args) => {
     return await ctx.db
-      .query("interviews") // query for read
+      .query("interviews")
       .withIndex("by_stream_call_id", (q) =>
         q.eq("streamCallId", args.streamCallId),
       )

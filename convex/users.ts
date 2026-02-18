@@ -5,11 +5,10 @@ export const syncUser = mutation({
   args: {
     name: v.string(),
     email: v.string(),
-    image: v.optional(v.string()),
     clerkId: v.string(),
+    image: v.optional(v.string()),
   },
   handler: async (ctx, args) => {
-    // check the clerkid already exits or not , if not then save it to default role
     const existingUser = await ctx.db
       .query("users")
       .filter((q) => q.eq(q.field("clerkId"), args.clerkId))
@@ -35,7 +34,6 @@ export const getUsers = query({
   },
 });
 
-// find user in the table whose clerk id match the given clerk id
 export const getUserByClerkId = query({
   args: { clerkId: v.string() },
   handler: async (ctx, args) => {
@@ -43,6 +41,7 @@ export const getUserByClerkId = query({
       .query("users")
       .withIndex("by_clerk_id", (q) => q.eq("clerkId", args.clerkId))
       .first();
+
     return user;
   },
 });
