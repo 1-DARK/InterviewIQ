@@ -165,6 +165,31 @@ function InterviewScheduleUI() {
                   rows={3}
                 />
               </div>
+
+              {/* candidate */}
+              <div className="space-y-2">
+                <label className="text-sm font-medium">Candidate</label>
+                <Select
+                  value={formData.candidateId}
+                  onValueChange={(candidateId) =>
+                    setFormData({ ...formData, candidateId })
+                  }
+                >
+                  <SelectTrigger>
+                    <SelectValue placeholder="Select candidate" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {candidates.map((candidate) => (
+                      <SelectItem
+                        key={candidate.clerkId}
+                        value={candidate.clerkId}
+                      >
+                        <UserInfo user={candidate} />
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              </div>
             </div>
           </DialogContent>
         </Dialog>
