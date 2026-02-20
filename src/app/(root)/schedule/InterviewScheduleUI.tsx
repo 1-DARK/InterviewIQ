@@ -23,6 +23,7 @@ import {
 } from "@/components/ui/select";
 import UserInfo from "@/components/UserInfo";
 import { XIcon } from "lucide-react";
+import { Calendar } from "@/components/ui/calendar";
 
 function InterviewScheduleUI() {
   const client = useStreamVideoClient();
@@ -238,6 +239,23 @@ function InterviewScheduleUI() {
                     </SelectContent>
                   </Select>
                 )}
+              </div>
+
+              {/* date and time */}
+              <div className="flex gap-4">
+                {/* calendar */}
+                <div className="space-y-2">
+                  <label className="text-sm font-medium">Date</label>
+                  <Calendar
+                    mode="single"
+                    selected={formData.date}
+                    onSelect={(date) =>
+                      date && setFormData({ ...formData, date })
+                    }
+                    disabled={(date) => date < new Date()}
+                    className="rounded-md border"
+                  />
+                </div>
               </div>
             </div>
           </DialogContent>
