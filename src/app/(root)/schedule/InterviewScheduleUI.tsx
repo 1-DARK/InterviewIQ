@@ -261,21 +261,6 @@ function InterviewScheduleUI() {
 
               <div className="space-y-2">
                 <label className="text-sm font-medium">Time</label>
-                <Select
-                  value={formData.time}
-                  onValueChange={(time) => setFormData({ ...formData, time })}
-                >
-                  <SelectTrigger>
-                    <SelectValue placeholder="Select time" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    {TIME_SLOTS.map((time) => (
-                      <SelectItem key={time} value={time}>
-                        {time}
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
               </div>
             </div>
           </DialogContent>
