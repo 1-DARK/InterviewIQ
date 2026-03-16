@@ -22,7 +22,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import UserInfo from "@/components/UserInfo";
-import { XIcon } from "lucide-react";
+import { Loader2Icon, XIcon } from "lucide-react";
 import { Calendar } from "@/components/ui/calendar";
 import { TIME_SLOTS } from "@/constants";
 
@@ -276,6 +276,21 @@ function InterviewScheduleUI() {
                     ))}
                   </SelectContent>
                 </Select>
+              </div>
+              <div className="flex justify-end gap-3 pt-4">
+                <Button variant="outline" onClick={() => setOpen(false)}>
+                  Cancel
+                </Button>
+                <Button onClick={scheduleMeeting} disabled={isCreating}>
+                  {isCreating ? (
+                    <>
+                      <Loader2Icon className="mr-2 size-4 animate-spin" />
+                      Scheduling...
+                    </>
+                  ) : (
+                    "Schedule Interview"
+                  )}
+                </Button>
               </div>
             </div>
           </DialogContent>
