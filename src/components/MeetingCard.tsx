@@ -2,6 +2,8 @@ import useMeetingActions from "@/hooks/useMeetingActions";
 import { Doc } from "../../convex/_generated/dataModel";
 import { getMeetingStatus } from "@/lib/utils";
 import { format } from "date-fns";
+import { Card, CardHeader } from "./ui/card";
+import { CalendarIcon } from "lucide-react";
 
 type Interview = Doc<"interviews">;
 function MeetingCard({ interview }: { interview: Interview }) {
@@ -12,7 +14,18 @@ function MeetingCard({ interview }: { interview: Interview }) {
     new Date(interview.startTime),
     "EEEE, MMMM d · h:mm a",
   );
-  return <div>hi</div>;
+  return (
+    <Card>
+      <CardHeader className="space-y-2">
+        <div className="flex items-center justify-between">
+          <div className="flex items-center gap-2 text-sm text-muted-foreground">
+            <CalendarIcon className="h-4 w-4" />
+            {formattedDate}
+          </div>
+        </div>
+      </CardHeader>
+    </Card>
+  );
 }
 
 export default MeetingCard;
