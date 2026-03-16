@@ -2,8 +2,9 @@ import useMeetingActions from "@/hooks/useMeetingActions";
 import { Doc } from "../../convex/_generated/dataModel";
 import { getMeetingStatus } from "@/lib/utils";
 import { format } from "date-fns";
-import { Card, CardHeader } from "./ui/card";
+import { Card, CardHeader, CardTitle } from "./ui/card";
 import { CalendarIcon } from "lucide-react";
+import { Badge } from "./ui/badge";
 
 type Interview = Doc<"interviews">;
 function MeetingCard({ interview }: { interview: Interview }) {
@@ -22,7 +23,23 @@ function MeetingCard({ interview }: { interview: Interview }) {
             <CalendarIcon className="h-4 w-4" />
             {formattedDate}
           </div>
+          <Badge
+            variant={
+              status === "live"
+                ? "default"
+                : status === "upcoming"
+                  ? "secondary"
+                  : "outline"
+            }
+          >
+            {status === "live"
+              ? "Live Now"
+              : status === "upcoming"
+                ? "Upcoming"
+                : "Completed"}
+          </Badge>
         </div>
+        <CardTitle>{interview.title}</CardTitle>
       </CardHeader>
     </Card>
   );
