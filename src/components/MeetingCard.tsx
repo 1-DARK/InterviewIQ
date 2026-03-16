@@ -2,9 +2,16 @@ import useMeetingActions from "@/hooks/useMeetingActions";
 import { Doc } from "../../convex/_generated/dataModel";
 import { getMeetingStatus } from "@/lib/utils";
 import { format } from "date-fns";
-import { Card, CardHeader, CardTitle } from "./ui/card";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "./ui/card";
 import { CalendarIcon } from "lucide-react";
 import { Badge } from "./ui/badge";
+import { Button } from "./ui/button";
 
 type Interview = Doc<"interviews">;
 function MeetingCard({ interview }: { interview: Interview }) {
@@ -40,7 +47,29 @@ function MeetingCard({ interview }: { interview: Interview }) {
           </Badge>
         </div>
         <CardTitle>{interview.title}</CardTitle>
+        {interview.description && (
+          <CardDescription className="line-clamp-2">
+            {interview.description}
+          </CardDescription>
+        )}
       </CardHeader>
+
+      <CardContent>
+        {status === "live" && (
+          <Button
+            className="w-full"
+            onClick={() => joinMeeting(interview.streamCallId)}
+          >
+            Join Meeting
+          </Button>
+        )}
+
+        {status === "upcoming" && (
+          <Button variant="outline" className="w-full" disabled>
+            Waiting to Start
+          </Button>
+        )}
+      </CardContent>
     </Card>
   );
 }
