@@ -7,6 +7,8 @@ import LoaderUI from "@/components/LoaderUI";
 import { groupInterviews } from "@/lib/utils";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
+import { INTERVIEW_CATEGORY } from "@/constants";
+import { Badge } from "@/components/ui/badge";
 
 function DashboardPage() {
   const users = useQuery(api.users.getUsers);
@@ -35,6 +37,21 @@ function DashboardPage() {
         <Link href="/schedule">
           <Button>Schedule New Interview</Button>
         </Link>
+      </div>
+      <div className="space-y-8">
+        {INTERVIEW_CATEGORY.map(
+          (category) =>
+            groupedInterviews[category.id]?.length > 0 && (
+              <section key={category.id}>
+                <div className="flex items-center gap-2 mb-4">
+                  <h2 className="text-xl font-semibold">{category.title}</h2>
+                  <Badge variant={category.variant}>
+                    {groupedInterviews[category.id].length}
+                  </Badge>
+                </div>
+              </section>
+            ),
+        )}
       </div>
     </div>
   );
