@@ -1,6 +1,10 @@
-import React from "react";
+import { useState } from "react";
+import { Id } from "../../convex/_generated/dataModel";
 
-function CommentDialog() {
+function CommentDialog({ interviewId }: { interviewId: Id<"interviews"> }) {
+  const [isOpen, setIsOpen] = useState(false);
+  const [comment, setComment] = useState("");
+  const [rating, setRating] = useState("3");
   return <div>hi</div>;
 }
 

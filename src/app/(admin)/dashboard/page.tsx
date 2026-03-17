@@ -139,7 +139,7 @@ function DashboardPage() {
                                 </Button>
                               </div>
                             )}
-                            <CommentDialog />
+                            <CommentDialog interviewId={interview._id} />
                           </CardFooter>
                         </Card>
                       );
