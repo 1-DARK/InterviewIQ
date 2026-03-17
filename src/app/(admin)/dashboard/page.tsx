@@ -2,13 +2,16 @@
 import { useMutation, useQuery } from "convex/react";
 import { api } from "../../../../convex/_generated/api";
 import toast from "react-hot-toast";
-import { Id } from "../../../../convex/_generated/dataModel";
+import { Doc, Id } from "../../../../convex/_generated/dataModel";
 import LoaderUI from "@/components/LoaderUI";
-import { groupInterviews } from "@/lib/utils";
+import { getCandidateInfo, groupInterviews } from "@/lib/utils";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { INTERVIEW_CATEGORY } from "@/constants";
 import { Badge } from "@/components/ui/badge";
+import { Card } from "@/components/ui/card";
+
+type Interview = Doc<"interviews">;
 
 function DashboardPage() {
   const users = useQuery(api.users.getUsers);
@@ -48,6 +51,18 @@ function DashboardPage() {
                   <Badge variant={category.variant}>
                     {groupedInterviews[category.id].length}
                   </Badge>
+                </div>
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                  {groupedInterviews[category.id].map(
+                    (interview: Interview) => {
+                      const candidateInfo = getCandidateInfo(
+                        users,
+                        interview.candidateId,
+                      );
+                      const startTime = new Date(interview.startTime);
+                      return <Card>hi</Card>;
+                    },
+                  )}
                 </div>
               </section>
             ),
