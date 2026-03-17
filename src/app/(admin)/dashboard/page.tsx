@@ -9,7 +9,10 @@ import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { INTERVIEW_CATEGORY } from "@/constants";
 import { Badge } from "@/components/ui/badge";
-import { Card } from "@/components/ui/card";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { CalendarIcon, ClockIcon } from "lucide-react";
+import { format } from "date-fns";
 
 type Interview = Doc<"interviews">;
 
@@ -60,7 +63,43 @@ function DashboardPage() {
                         interview.candidateId,
                       );
                       const startTime = new Date(interview.startTime);
-                      return <Card>hi</Card>;
+                      return (
+                        <Card className="hover:shadow-md transition-all">
+                          {/* candidate info */}
+                          <CardHeader className="p-4">
+                            <div className="flex items-center gap-3">
+                              <Avatar className="h-10 w-10">
+                                <AvatarImage src={candidateInfo.image} />
+                                <AvatarFallback>
+                                  {candidateInfo.initials}
+                                </AvatarFallback>
+                              </Avatar>
+                              <div>
+                                <CardTitle className="text-base">
+                                  {candidateInfo.name}
+                                </CardTitle>
+                                <p className="text-sm text-muted-foreground">
+                                  {interview.title}
+                                </p>
+                              </div>
+                            </div>
+                          </CardHeader>
+
+                          {/* date and time */}
+                          <CardContent className="p-4">
+                            <div className="flex items-center gap-4 text-sm text-muted-foreground">
+                              <div className="flex items-center gap-1">
+                                <CalendarIcon className="h-4 w-4" />
+                                {format(startTime, "MMM dd")}
+                              </div>
+                              <div className="flex items-center gap-1">
+                                <ClockIcon className="h-4 w-4" />
+                                {format(startTime, "hh:mm a")}
+                              </div>
+                            </div>
+                          </CardContent>
+                        </Card>
+                      );
                     },
                   )}
                 </div>
