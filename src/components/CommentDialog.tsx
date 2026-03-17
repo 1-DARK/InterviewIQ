@@ -3,7 +3,15 @@ import { Id } from "../../convex/_generated/dataModel";
 import { useMutation, useQuery } from "convex/react";
 import { api } from "../../convex/_generated/api";
 import toast from "react-hot-toast";
-import { StarIcon } from "lucide-react";
+import { MessageSquareIcon, StarIcon } from "lucide-react";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "./ui/dialog";
+import { Button } from "./ui/button";
 
 function CommentDialog({ interviewId }: { interviewId: Id<"interviews"> }) {
   const [isOpen, setIsOpen] = useState(false);
@@ -46,7 +54,22 @@ function CommentDialog({ interviewId }: { interviewId: Id<"interviews"> }) {
 
   if (existingComments === undefined || users === undefined) return null;
 
-  return <div>hi</div>;
+  return (
+    <Dialog open={isOpen} onOpenChange={setIsOpen}>
+      <DialogTrigger asChild>
+        <Button variant="secondary" className="w-full">
+          <MessageSquareIcon className="h-4 w-4 mr-2" />
+          Add Comment
+        </Button>
+      </DialogTrigger>
+
+      <DialogContent className="sm:max-w-150">
+        <DialogHeader>
+          <DialogTitle>Interview Comment</DialogTitle>
+        </DialogHeader>
+      </DialogContent>
+    </Dialog>
+  );
 }
 
 export default CommentDialog;
