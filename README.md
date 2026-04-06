@@ -1,36 +1,119 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# InterviewIQ
 
-## Getting Started
+InterviewIQ is a full-stack mock interview platform where interviewers can schedule and run coding interviews, and candidates can join live sessions with a built-in code editor.
 
-First, run the development server:
+## Features
+
+- Authentication and user management with Clerk
+- Role-based experience for interviewers and candidates
+- Interview scheduling with candidate/interviewer assignment
+- Instant meeting creation and join-by-link flow
+- Live video interviews powered by Stream Video SDK
+- In-meeting coding environment (Monaco Editor) with multi-language starter code
+- Interview status tracking (upcoming, completed, succeeded, failed)
+- Post-interview rating and feedback comments
+- Recording browser with playback and quick link copy
+- Real-time backend and data layer with Convex
+
+## Tech Stack
+
+- Next.js (App Router) + React + TypeScript
+- Tailwind CSS + Radix UI
+- Clerk (auth)
+- Convex (database, queries, mutations, webhooks)
+- Stream Video SDK (calls and recordings)
+- Monaco Editor
+
+## Project Structure
+
+```text
+src/
+  app/
+    (root)/               # Main authenticated app routes
+    (admin)/dashboard     # Interviewer dashboard
+  components/             # Reusable UI and feature components
+  hooks/                  # Custom hooks for calls, roles, and meeting actions
+  actions/                # Server actions (e.g. Stream token provider)
+convex/
+  schema.ts               # Convex tables/indexes
+  users.ts                # User sync and user queries
+  interview.ts            # Interview queries and mutations
+  comments.ts             # Feedback/comment mutations and queries
+  http.ts                 # Clerk webhook endpoint
+```
+
+## Environment Variables
+
+Create a `.env.local` file in the project root.
+
+```env
+NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY=
+CLERK_SECRET_KEY=
+CLERK_WEBHOOK_SECRET=
+
+CONVEX_DEPLOYMENT=
+NEXT_PUBLIC_CONVEX_URL=
+CLERK_JWT_ISSUER_DOMAIN=
+
+NEXT_PUBLIC_STREAM_API_KEY=
+STREAM_SECRET_KEY=
+```
+
+### Notes
+
+- `CLERK_WEBHOOK_SECRET` is required by `convex/http.ts` for webhook verification.
+- `NEXT_PUBLIC_STREAM_API_KEY` and `STREAM_SECRET_KEY` are required for Stream call/token flow.
+- `CLERK_JWT_ISSUER_DOMAIN` is used by Convex auth configuration.
+
+## Local Development
+
+Install dependencies:
+
+```bash
+npm install
+```
+
+Run Convex in one terminal:
+
+```bash
+npx convex dev
+```
+
+Run Next.js in another terminal:
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open `http://localhost:3000`.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Clerk Webhook Setup
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+When users sign up, InterviewIQ syncs them into Convex through a Clerk webhook.
 
-## Learn More
+1. In Clerk Dashboard, create a webhook endpoint:
+   - URL: `https://<your-convex-deployment>/clerk-webhook`
+2. Subscribe to event:
+   - `user.created`
+3. Copy the webhook signing secret into:
+   - `CLERK_WEBHOOK_SECRET`
 
-To learn more about Next.js, take a look at the following resources:
+## Role Behavior
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+- New users are created as `candidate` by default.
+- Interviewer-only actions (schedule, dashboard controls) are shown based on user role.
+- To test interviewer flows locally, update a user role to `interviewer` in Convex data.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Available Scripts
 
-## Deploy on Vercel
+- `npm run dev` - Start Next.js dev server
+- `npm run build` - Production build
+- `npm run start` - Start production server
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## Contributing
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Contributions are welcome. Please follow the existing code style and conventions.
+
+## License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
