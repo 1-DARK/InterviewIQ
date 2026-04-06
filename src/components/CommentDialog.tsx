@@ -16,6 +16,7 @@ import { Badge } from "./ui/badge";
 import { ScrollArea } from "./ui/scroll-area";
 import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
 import { format } from "date-fns";
+import { getInterviewerInfo } from "@/lib/utils";
 
 function CommentDialog({ interviewId }: { interviewId: Id<"interviews"> }) {
   const [isOpen, setIsOpen] = useState(false);
@@ -81,6 +82,49 @@ function CommentDialog({ interviewId }: { interviewId: Id<"interviews"> }) {
                   {existingComments.length !== 1 ? "s" : ""}
                 </Badge>
               </div>
+
+              <ScrollArea className="h-60">
+                <div className="space-y-4">
+                  {existingComments.map((comment, index) => {
+                    const interviewer = getInterviewerInfo(
+                      users,
+                      comment.interviewerId,
+                    );
+                    return (
+                      <div
+                        key={index}
+                        className="rounded-lg border p-4 space-y-3"
+                      >
+                        <div className="flex items-center justify-between">
+                          <div className="flex items-center gap-2">
+                            <Avatar className="h-8 w-8">
+                              <AvatarImage src={interviewer.image} />
+                              <AvatarFallback>
+                                {interviewer.initials}
+                              </AvatarFallback>
+                            </Avatar>
+                            <div>
+                              <p className="text-sm font-medium">
+                                {interviewer.name}
+                              </p>
+                              <p className="text-xs text-muted-foreground">
+                                {format(
+                                  comment._creationTime,
+                                  "MMM d, yyyy • h:mm a",
+                                )}
+                              </p>
+                            </div>
+                          </div>
+                          {renderStars(comment.rating)}
+                        </div>
+                        <p className="text-sm text-muted-foreground">
+                          {comment.content}
+                        </p>
+                      </div>
+                    );
+                  })}
+                </div>
+              </ScrollArea>
             </div>
           )}
         </div>
