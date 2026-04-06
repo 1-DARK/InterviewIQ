@@ -12,6 +12,10 @@ import {
   DialogTrigger,
 } from "./ui/dialog";
 import { Button } from "./ui/button";
+import { Badge } from "./ui/badge";
+import { ScrollArea } from "./ui/scroll-area";
+import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
+import { format } from "date-fns";
 
 function CommentDialog({ interviewId }: { interviewId: Id<"interviews"> }) {
   const [isOpen, setIsOpen] = useState(false);
@@ -67,6 +71,19 @@ function CommentDialog({ interviewId }: { interviewId: Id<"interviews"> }) {
         <DialogHeader>
           <DialogTitle>Interview Comment</DialogTitle>
         </DialogHeader>
+        <div className="space-y-6">
+          {existingComments.length > 0 && (
+            <div className="space-y-4">
+              <div className="flex items-center justify-between">
+                <h4 className="text-sm font-medium">Previous Comments</h4>
+                <Badge variant="outline">
+                  {existingComments.length} Comment
+                  {existingComments.length !== 1 ? "s" : ""}
+                </Badge>
+              </div>
+            </div>
+          )}
+        </div>
       </DialogContent>
     </Dialog>
   );
