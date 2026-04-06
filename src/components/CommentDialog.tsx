@@ -7,6 +7,7 @@ import { MessageSquareIcon, StarIcon } from "lucide-react";
 import {
   Dialog,
   DialogContent,
+  DialogFooter,
   DialogHeader,
   DialogTitle,
   DialogTrigger,
@@ -25,6 +26,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "./ui/select";
+import { Textarea } from "./ui/textarea";
 
 function CommentDialog({ interviewId }: { interviewId: Id<"interviews"> }) {
   const [isOpen, setIsOpen] = useState(false);
@@ -155,8 +157,24 @@ function CommentDialog({ interviewId }: { interviewId: Id<"interviews"> }) {
                 </SelectContent>
               </Select>
             </div>
+            {/* Comment section */}
+            <div className="space-y-2">
+              <Label>Your Comment</Label>
+              <Textarea
+                value={comment}
+                onChange={(e) => setComment(e.target.value)}
+                placeholder="Share your detailed comment about the candidate..."
+                className="h-32"
+              />
+            </div>
           </div>
         </div>
+        <DialogFooter>
+          <Button variant="outline" onClick={() => setIsOpen(false)}>
+            Cancel
+          </Button>
+          <Button onClick={handleSubmit}>Submit</Button>
+        </DialogFooter>
       </DialogContent>
     </Dialog>
   );
