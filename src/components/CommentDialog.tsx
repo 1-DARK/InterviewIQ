@@ -17,6 +17,14 @@ import { ScrollArea } from "./ui/scroll-area";
 import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
 import { format } from "date-fns";
 import { getInterviewerInfo } from "@/lib/utils";
+import { Label } from "./ui/label";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "./ui/select";
 
 function CommentDialog({ interviewId }: { interviewId: Id<"interviews"> }) {
   const [isOpen, setIsOpen] = useState(false);
@@ -127,6 +135,27 @@ function CommentDialog({ interviewId }: { interviewId: Id<"interviews"> }) {
               </ScrollArea>
             </div>
           )}
+
+          <div className="space-y-4">
+            {/*Rating section*/}
+            <div className="space-y-2">
+              <Label>Rating</Label>
+              <Select value={rating} onValueChange={setRating}>
+                <SelectTrigger>
+                  <SelectValue placeholder="Select rating" />
+                </SelectTrigger>
+                <SelectContent>
+                  {[1, 2, 3, 4, 5].map((value) => (
+                    <SelectItem key={value} value={value.toString()}>
+                      <div className="flex items-center gap-2">
+                        {renderStars(value)}
+                      </div>
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+            </div>
+          </div>
         </div>
       </DialogContent>
     </Dialog>
